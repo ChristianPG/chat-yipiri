@@ -6,14 +6,25 @@
     <title>Chat Yipiri</title>
 
     <script type="module">
+      import { io } from 'https://cdn.socket.io/4.8.3/socket.io.esm.min.js';
+
+      const socket = io();
+
       const form = document.getElementById('form');
       const input = document.getElementById('input');
+      const messages = document.getElementById('messages');
+
+      socket.on('chat message', msg => {
+        const item = `<li>${msg}</li>`;
+        messages.insertAdjacentHTML('beforeEnd', item);
+      });
 
       form.addEventListener('submit', e => {
         e.preventDefault();
 
         if (input.value) {
-          console.log('testing message:', input.value);
+          socket.emit('chat message', input.value);
+          input.value = '';
         }
       });
     </script>
@@ -48,6 +59,20 @@
         height: 100vh;
         padding: 36px 36px 100px 36px;
         grid-template-rows: 1fr;
+      }
+
+      #messages {
+        list-style: none;
+        magin: 0;
+        padding: 0;
+      }
+
+      #messages > li {
+        padding: 8px 16px;
+      }
+
+      #messages > li:nth-child(odd) {
+        background-color: #000;
       }
 
       #chat {
@@ -97,6 +122,9 @@
 
   <body>
     <section id="chat">
+      <ul id="messages">
+        <li>Welcome to the chat!</li>
+      </ul>
       <form id="form">
         <input
           type="text"
