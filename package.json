@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "node --watch server/index.ts"
+    "dev:server": "node --watch server/index.ts",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -18,8 +19,11 @@
     "socket.io": "4.8.3"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@types/express": "5.0.6",
+    "eslint": "10.1.0",
     "prettier": "3.8.1",
-    "typescript": "6.0.2"
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.58.0"
   }
 }
