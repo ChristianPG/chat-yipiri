@@ -7,9 +7,17 @@ const dbClient = createClient({
 });
 
 await dbClient.execute(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+  )
+`);
+
+await dbClient.execute(`
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    content TEXT
+    content TEXT NOT NULL
   )
 `);
 
