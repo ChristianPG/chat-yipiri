@@ -1,9 +1,10 @@
+import jwt from 'jsonwebtoken';
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import { type ResultSet } from '@libsql/client';
 import dbClient from './db-client.ts';
-import { PORT } from './config.ts';
+import { AUTH_SECRET, PORT } from './config.ts';
 import { userRepository } from './user-repository.ts';
 
 const app = express();
@@ -67,13 +68,20 @@ app.post('/user/create', async (req, res) => {
 });
 
 app.post('/user/login', async (req, res) => {
-  const isUserLoggedIn = await userRepository.login(
+  if (!AUTH_SECRET) {
+    res.status(500).send('Authentication not available');
+    return;
+  }
+
+  const username = await userRepository.login(
     req.body.username,
     req.body.password,
   );
 
-  if (isUserLoggedIn) {
-    res.send('This should be an auth token');
+  const authToken = jwt.sign({ username }, AUTH_SECRET, { expiresIn: '1h' });
+
+  if (username) {
+    res.send(authToken);
   } else {
     res.status(400).send('Information not valid');
   }
