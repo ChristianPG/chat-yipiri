@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
@@ -14,6 +15,7 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
+app.use(cookieParser());
 
 io.on('connection', async socket => {
   console.log('User connected');
@@ -81,7 +83,14 @@ app.post('/user/login', async (req, res) => {
   const authToken = jwt.sign({ username }, AUTH_SECRET, { expiresIn: '1h' });
 
   if (username) {
-    res.send(authToken);
+    res
+      .cookie('auth_token', authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60,
+      })
+      .send('User successfully authenticated');
   } else {
     res.status(400).send('Information not valid');
   }
