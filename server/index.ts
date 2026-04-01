@@ -96,6 +96,10 @@ app.post('/user/login', async (req, res) => {
   }
 });
 
+app.delete('/user/logout', (_req, res) => {
+  res.clearCookie('auth_token').send('User successfully logged out');
+});
+
 server.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
