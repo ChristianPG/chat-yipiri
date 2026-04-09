@@ -1,11 +1,12 @@
-import jwt from 'jsonwebtoken';
+import { type ResultSet } from '@libsql/client';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import { type ResultSet } from '@libsql/client';
-import dbClient from './db-client.ts';
+
 import { AUTH_SECRET, PORT } from './config.ts';
+import dbClient from './db-client.ts';
 import { userRepository } from './user-repository.ts';
 
 const app = express();
