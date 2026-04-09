@@ -10,16 +10,16 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "lib": ["es2022"]
-
+    "lib": [
+      "es2022"
+    ],
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-
     /* Transpiling with TypeScript: */
     "module": "NodeNext",
     "outDir": "dist",
-    "sourceMap": true,
+    "sourceMap": true
   }
 }
