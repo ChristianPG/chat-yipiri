@@ -4,8 +4,9 @@
   "description": "",
   "main": "server/index.ts",
   "scripts": {
+    "dev": "node --watch server/index.ts",
+    "start": "node server/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:server": "node --watch server/index.ts",
     "lint": "eslint ."
   },
   "keywords": [],
